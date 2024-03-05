@@ -23,9 +23,9 @@ class BookRegistrationServiceTest {
 
     @Test
     void registerBookWithValidISBN() {
-        Book book = new Book("1234567890", "Test Book", "Test Author");
+        Book book = new Book("978-3-16-148410-0", "Test Book", "Test Author");
         when(bookRepository.save(any(Book.class))).thenReturn(book);
-
+        
         bookRegistrationService.registerBook(book);
 
         verify(bookRepository, times(1)).save(book);

@@ -23,11 +23,38 @@ public class ISBNValidator {
 
     private static boolean isValidISBN10(String isbn) {
         // Implement the validation logic for 10-digit ISBN
-        throw new UnsupportedOperationException("10-digit ISBN validation not implemented yet");
+        int sum = 0;
+        for (int i = 0; i < 9; i++) {
+            int digit = isbn.charAt(i) - '0';
+            if (0 > digit || 9 < digit) {
+                throw new NumberFormatException("ISBN 숫자만 포함해야 합니다.");
+            }
+            sum += (digit * (10 - i));
+        }
+        char lastChar = isbn.charAt(9);
+        if (lastChar != 'X' && (lastChar < '0' || lastChar > '9')) {
+            throw new NumberFormatException("ISBN 마지막 자리는 숫자거나 X여야 합니다.");
+        }
+        sum += (lastChar == 'X') ? 10 : (lastChar - '0');
+
+        return (sum % 11 == 0);
     }
 
     private static boolean isValidISBN13(String isbn) {
-        // Implement the validation logic for 13-digit ISBN
-        throw new UnsupportedOperationException("13-digit ISBN validation not implemented yet");
+        int sum = 0;
+        for (int i = 0; i < 12; i++) {
+            int digit = isbn.charAt(i) - '0';
+            if (0 > digit || 9 < digit) {
+                throw new NumberFormatException("ISBN 숫자만 포함해야 합니다.");
+            }
+            // 홀수 위치의 숫자는 1을 곱하고, 짝수 위치의 숫자는 3을 곱한다.
+            sum += (i % 2 == 0) ? digit : digit * 3;
+        }
+        int lastDigit = isbn.charAt(12) - '0';
+        if (0 > lastDigit || 9 < lastDigit) {
+            throw new NumberFormatException("ISBN 마지막 자리는 숫자여야 합니다.");
+        }
+        // 마지막 숫자를 포함하여 합계가 10의 배수인지 확인한다.
+        return (sum + lastDigit) % 10 == 0;
     }
 }

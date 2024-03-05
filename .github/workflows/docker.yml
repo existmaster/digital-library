@@ -33,5 +33,6 @@ jobs:
           context: .
           push: true
           tags: |
-            ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:latest
-            ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:${{ github.sha }}
+            ${{ secrets.DOCKER_HUB_USERNAME }}/digital-library:latest
+            ${{ secrets.DOCKER_HUB_USERNAME }}/digital-library:${{ github.sha }}
+
